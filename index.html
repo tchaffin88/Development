@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halo LAN Party</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+</head>
+
+<body class="dark-mode">
+    <!-- Cinematic Video Background -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="assets/videos/Frosty Halo Infinite Montage - Edited by Snipetality.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Symbolic Start Button -->
+    <div class="start-container">
+        <button id="start-experience">
+            <img src="assets/icons/start-icon.png" alt="Start Icon" class="start-icon" />
+        </button>
+    </div>
+
+    <!-- Header and Navigation -->
+    <header>
+        <h1>Halo LAN Party</h1>
+        <nav>
+            <ul>
+                <li><a href="#schedule" data-page="schedule.html">Schedule</a></li>
+                <li><a href="#rules" data-page="rules.html">Rules</a></li>
+                <li><a href="#rsvp" data-page="rsvp.html">RSVP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Overlay -->
+    <main id="content-container">
+        <section id="hero">
+            <img src="assets/images/800px-HINF_Assembled_Emblem.png" alt="Mission Badge" class="mission-badge" />
+            <div class="mission-intro">
+                <p class="mission-code">Mission Code: ONI-117</p>
+                <p class="mission-brief">Objective: Assemble Fireteam. Secure LAN perimeter. Engage in tactical
+                    simulation.</p>
+            </div>
+
+            <div class="hero-overlay"></div>
+            <h2>Lock and Load, Spartan</h2>
+            <p>Join us for a legendary night of Halo battles, snacks, and squad banter.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© Halo LAN Command Center</p>
+    </footer>
+</body>
+
+</html>
