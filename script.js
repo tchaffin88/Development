@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Replace this URL with your backend endpoint or webhook
-      const response = await fetch("https://development-git-lan-party-tims-projects-a1acbb75.vercel.app", {
+      const response = await fetch("https://development-git-lan-party-tims-projects-a1acbb75.vercel.app/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone }),
