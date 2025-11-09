@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Halo LAN Party</title>
     <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <script defer src="script.js"></script>
 </head>
 
@@ -29,7 +30,7 @@
         <nav>
             <ul>
                 <li><a href="#schedule" data-page="schedule.html">Schedule</a></li>
-                <li><a href="#rules" data-page="rules.html">Rules</a></li>
+                <li><a href="#loadout" data-page="loadout.html">Loadout</a></li>
                 <li><a href="#rsvp" data-page="rsvp.html">RSVP</a></li>
             </ul>
         </nav>
@@ -38,16 +39,19 @@
     <!-- Hero Section with Overlay -->
     <main id="content-container">
         <section id="hero">
-            <img src="assets/images/800px-HINF_Assembled_Emblem.png" alt="Mission Badge" class="mission-badge" />
             <div class="mission-intro">
                 <p class="mission-code">Mission Code: ONI-117</p>
                 <p class="mission-brief">Objective: Assemble Fireteam. Secure LAN perimeter. Engage in tactical
                     simulation.</p>
             </div>
-
+        
+            <!-- Countdown Timer -->
+            <div id="countdown-timer" class="mission-countdown">Countdown: 03h 12m 45s</div>
+            
             <div class="hero-overlay"></div>
             <h2>Lock and Load, Spartan</h2>
-            <p>Join us for a legendary night of Halo battles, snacks, and squad banter.</p>
+            <p>Join us for a legendary night of Halo battles, brews, snacks, and squad banter.</p>
+            <p class="mission-location">Location: Tim's house. Directions will be provided upon RSVP.</p>
         </section>
     </main>
 
