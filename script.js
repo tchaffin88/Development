@@ -77,8 +77,8 @@ document.querySelectorAll('nav a').forEach(link => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#rsvp form");
-  const nameInput = form.querySelector("input[type='text']");
-  const phoneInput = form.querySelector("input[type='email']");
+  const nameInput = form.querySelector("input[name='name']");
+  const phoneInput = form.querySelector("input[name='phone']");
   const submitButton = form.querySelector("button");
 
   form.addEventListener("submit", async (e) => {
@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showStatus("Deploying confirmation beacon...", "loading");
 
     try {
-      // Replace this URL with your backend endpoint or webhook
       const response = await fetch("https://development-git-lan-party-tims-projects-a1acbb75.vercel.app/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
