@@ -25,6 +25,9 @@ export default async function handler(req, res) {
     }
 
     try {
+        console.log("Sending email to:", process.env.HOST_EMAIL);
+        console.log("Payload:", { name, email });
+
         await resend.emails.send({
             from: 'RSVP Bot <you@resend.dev>', // use resend.dev for now
             to: process.env.HOST_EMAIL,
