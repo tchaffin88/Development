@@ -1,24 +1,33 @@
-import twilio from "twilio";
+import { Resend } from 'resend';
 
-const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" });
-    }
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
-    const { name, phone } = req.body;
-    console.log("RSVP received:", name, phone);
+  const { name, email } = req.body;
 
-    try {
-        await client.messages.create({
-            body: `Mission confirmed, ${name}. Directions inbound.`,
-            from: process.env.TWILIO_PHONE,
-            to: phone,
-        });
-        res.status(200).json({ message: "RSVP confirmed and SMS sent" });
-    } catch (err) {
-        console.error("Twilio error:", err);
-        res.status(500).json({ error: "SMS failed" });
-    }
+  if (!name || !email) {
+    return res.status(400).json({ error: "Missing name or email" });
+  }
+
+  try {
+    await resend.emails.send({
+      from: 'RSVP Bot <rsvp@lan-party.com>',
+      to: process.env.HOST_EMAIL,
+      subject: 'New RSVP Received',
+      html: `
+        <h2>New RSVP</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+      `,
+    });
+
+    res.status(200).json({ message: "Mission confirmed. Directions inbound." });
+  } catch (err) {
+    console.error("Email error:", err);
+    res.status(500).json({ error: "Email failed" });
+  }
 }

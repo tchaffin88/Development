@@ -9,10 +9,10 @@ document.getElementById('start-experience').addEventListener('click', () => {
   document.getElementById('start-experience').style.display = 'none';
 });
 
+// Countdown logic
 function updateCountdown() {
   const countdownElement = document.getElementById("countdown-timer");
   const targetTime = new Date("2025-11-22T18:00:00-05:00").getTime(); // EST
-
   const now = new Date().getTime();
   const distance = targetTime - now;
 
@@ -26,9 +26,7 @@ function updateCountdown() {
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  countdownElement.textContent = `Countdown: ${days}d ${hours.toString().padStart(2, '0')}h ${minutes
-    .toString()
-    .padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+  countdownElement.textContent = `Countdown: ${days}d ${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
 }
 
 setInterval(updateCountdown, 1000);
@@ -75,19 +73,20 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
+// RSVP form logic (email-based)
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#rsvp form");
   const nameInput = form.querySelector("input[name='name']");
-  const phoneInput = form.querySelector("input[name='phone']");
+  const emailInput = form.querySelector("input[name='email']");
   const submitButton = form.querySelector("button");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
+    const email = emailInput.value.trim();
 
-    if (!name || !phone) {
+    if (!name || !email) {
       showStatus("Please fill out all fields.", "error");
       return;
     }
@@ -96,10 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
     showStatus("Deploying confirmation beacon...", "loading");
 
     try {
-      const response = await fetch("https://development-git-lan-party-tims-projects-a1acbb75.vercel.app/api/rsvp", {
+      const response = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
+        body: JSON.stringify({ name, email }),
       });
 
       if (response.ok) {
