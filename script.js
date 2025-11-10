@@ -75,7 +75,7 @@ document.querySelectorAll('nav a').forEach(link => {
 
 // RSVP form logic (email-based)
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("#rsvp form");
+  const form = document.querySelector("#rsvp-form");
   const nameInput = form.querySelector("input[name='name']");
   const emailInput = form.querySelector("input[name='email']");
   const submitButton = form.querySelector("button");
