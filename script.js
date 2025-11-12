@@ -12,6 +12,7 @@ document.getElementById('start-experience').addEventListener('click', () => {
 // Countdown logic
 function updateCountdown() {
   const countdownElement = document.getElementById("countdown-timer");
+  if (!countdownElement) return; // ← This prevents the error if the element doesn't exist
   const targetTime = new Date("2025-11-22T18:00:00-05:00").getTime(); // EST
   const now = new Date().getTime();
   const distance = targetTime - now;
@@ -144,11 +145,14 @@ function initRSVP() {
     if (!overlay) return;
     overlay.classList.remove("hidden");
 
-    const closeBtn = document.getElementById("close-overlay");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => {
-        overlay.classList.add("hidden");
-      });
-    }
+     // Attach listener AFTER overlay is visible
+    setTimeout(() => {
+      const closeBtn = document.getElementById("close-overlay");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          overlay.classList.add("hidden");
+        });
+      }
+    }, 50);
   }
 }
