@@ -66,6 +66,7 @@ document.querySelectorAll('nav a').forEach(link => {
             container.classList.remove('fade-out');
             setTimeout(() => {
               revealSections();
+              if (page.includes("rsvp")) initRSVP(); // ← RSVP logic runs only after rsvp.html loads
             }, 50);
           });
       }, 300);
@@ -73,9 +74,11 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
-// RSVP form logic (email-based)
-document.addEventListener("DOMContentLoaded", () => {
+// Modular RSVP logic
+function initRSVP() {
   const form = document.querySelector("#rsvp-form");
+  if (!form) return;
+
   const nameInput = form.querySelector("input[name='name']");
   const emailInput = form.querySelector("input[name='email']");
   const submitButton = form.querySelector("button");
@@ -105,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         showStatus("Mission confirmed. Directions inbound.", "success");
         form.reset();
+        showOverlay(); // ← cinematic overlay trigger
       } else {
         showStatus("Transmission failed. Try again later.", "error");
       }
@@ -134,4 +138,17 @@ document.addEventListener("DOMContentLoaded", () => {
     statusEl.style.fontWeight = "bold";
     statusEl.style.marginTop = "1rem";
   }
-});
+
+  function showOverlay() {
+    const overlay = document.getElementById("confirmation-overlay");
+    if (!overlay) return;
+    overlay.classList.remove("hidden");
+
+    const closeBtn = document.getElementById("close-overlay");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        overlay.classList.add("hidden");
+      });
+    }
+  }
+}
