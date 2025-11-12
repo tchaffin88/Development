@@ -77,6 +77,8 @@ document.querySelectorAll('nav a').forEach(link => {
 
 // Modular RSVP logic
 function initRSVP() {
+  const overlay = document.getElementById("confirmation-overlay");
+  if (overlay) overlay.classList.add("hidden"); // ← force-hide on load
   const form = document.querySelector("#rsvp-form");
   if (!form) return;
 
