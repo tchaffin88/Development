@@ -143,21 +143,16 @@ function initRSVP() {
   }
 
   function showOverlay() {
-    console.log("showOverlay triggered"); // ← diagnostic log
     const overlay = document.getElementById("confirmation-overlay");
     if (!overlay) return;
+
     overlay.classList.remove("hidden");
 
-    // Use a MutationObserver to wait for the button to exist
-    const observer = new MutationObserver(() => {
-      const closeBtn = document.getElementById("close-overlay");
-      if (closeBtn) {
-        closeBtn.onclick = () => {
-          overlay.classList.add("hidden");
-        };
-        observer.disconnect(); // Stop observing once attached
-      }
-    });
-    observer.observe(overlay, { childList: true, subtree: true });
+    const closeBtn = document.getElementById("close-overlay");
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        overlay.classList.add("hidden");
+      };
+    }
   }
 }
