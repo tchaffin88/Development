@@ -673,7 +673,7 @@ button {
 
 .radio-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin: 0.5rem 0;
   cursor: pointer;
   font-family: 'Orbitron', sans-serif;
