@@ -141,6 +141,7 @@ function initRSVP() {
   }
 
   function showOverlay() {
+    console.log("showOverlay triggered"); // ← diagnostic log
     const overlay = document.getElementById("confirmation-overlay");
     if (!overlay) return;
     overlay.classList.remove("hidden");
