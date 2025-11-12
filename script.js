@@ -68,9 +68,13 @@ document.querySelectorAll('nav a').forEach(link => {
             setTimeout(() => {
               revealSections();
               if (page.includes("rsvp")) {
-                const overlay = document.getElementById("confirmation-overlay");
-                if (overlay) overlay.classList.add("hidden"); // Force-hide overlay after injection
                 initRSVP();
+
+                // Delay slightly to ensure overlay is in DOM
+                setTimeout(() => {
+                  const overlay = document.getElementById("confirmation-overlay");
+                  if (overlay) overlay.classList.add("hidden");
+                }, 50);
               }
             }, 50);
           });
