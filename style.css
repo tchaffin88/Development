@@ -670,3 +670,38 @@ button {
   text-align: center;
   font-size: 2rem;
 }
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: #00ffcc;
+  transition: transform 0.2s ease;
+}
+
+.radio-container:hover {
+  transform: scale(1.05);
+}
+
+.radio-container input[type="radio"] {
+  appearance: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 2px solid #00ffcc;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  background-color: transparent;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.radio-container input[type="radio"]:checked {
+  background-color: #00ffcc;
+  box-shadow: 0 0 5px #00ffcc;
+}
+
+.radio-label {
+  user-select: none;
+}
