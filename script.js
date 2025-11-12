@@ -69,12 +69,7 @@ document.querySelectorAll('nav a').forEach(link => {
               revealSections();
               if (page.includes("rsvp")) {
                 initRSVP();
-
-                // Delay slightly to ensure overlay is in DOM
-                setTimeout(() => {
-                  const overlay = document.getElementById("confirmation-overlay");
-                  if (overlay) overlay.classList.add("hidden");
-                }, 50);
+                // Removed the previous faulty logic to hide the overlay here.
               }
             }, 50);
           });
@@ -91,6 +86,20 @@ function initRSVP() {
   const nameInput = form.querySelector("input[name='name']");
   const emailInput = form.querySelector("input[name='email']");
   const submitButton = form.querySelector("button");
+  const overlay = document.getElementById("confirmation-overlay");
+  const closeBtn = document.getElementById("close-overlay");
+
+  // Ensure the overlay is hidden by default when initRSVP runs
+  if (overlay) {
+    overlay.classList.add("hidden");
+  }
+
+  // Attach the close event listener once here
+  if (closeBtn && overlay) {
+    closeBtn.onclick = () => {
+      overlay.classList.add("hidden");
+    };
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -153,12 +162,6 @@ function initRSVP() {
     if (!overlay) return;
 
     overlay.classList.remove("hidden");
-
-    const closeBtn = document.getElementById("close-overlay");
-    if (closeBtn) {
-      closeBtn.onclick = () => {
-        overlay.classList.add("hidden");
-      };
-    }
+    // Close button logic is already handled in initRSVP, removed from here.
   }
 }
