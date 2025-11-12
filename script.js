@@ -4,10 +4,14 @@ document.body.classList.add('dark-mode');
 // Start experience button logic
 document.getElementById('start-experience').addEventListener('click', () => {
   const video = document.getElementById('bg-video');
+  const overlay = document.getElementById('video-overlay');
+
   video.muted = false;
   video.play();
-  document.getElementById('start-experience').style.display = 'none';
+  video.classList.add('visible');
+  overlay.classList.add('hidden');
 });
+
 
 // Countdown logic
 function updateCountdown() {
@@ -83,36 +87,55 @@ function initRSVP() {
   const form = document.querySelector("#rsvp-form");
   if (!form) return;
 
-  const nameInput = form.querySelector("input[name='name']");
-  const emailInput = form.querySelector("input[name='email']");
-  const submitButton = form.querySelector("button");
+  const steps = form.querySelectorAll(".form-step");
+  let currentStep = 0;
+
   const overlay = document.getElementById("confirmation-overlay");
   const closeBtn = document.getElementById("close-overlay");
 
-  // Ensure the overlay is hidden by default when initRSVP runs
-  if (overlay) {
-    overlay.classList.add("hidden");
-  }
-
-  // Attach the close event listener once here
+  // Ensure overlay hidden by default
+  if (overlay) overlay.classList.add("hidden");
   if (closeBtn && overlay) {
-    closeBtn.onclick = () => {
-      overlay.classList.add("hidden");
-    };
+    closeBtn.onclick = () => overlay.classList.add("hidden");
   }
 
+  // Step navigation
+  function showStep(index) {
+    steps.forEach((step, i) => step.classList.toggle("active", i === index));
+  }
+  form.querySelectorAll(".next-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+  });
+  form.querySelectorAll(".prev-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+  });
+  showStep(currentStep);
+
+  // Submit logic
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log("Form intercepted");
 
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-    if (!name || !email) {
-      showStatus("Please fill out all fields.", "error");
+    // Basic validation
+    if (!data.name || !data.email) {
+      showStatus("Please fill out all required fields.", "error");
       return;
     }
 
+    const submitButton = form.querySelector("button[type='submit']");
     submitButton.disabled = true;
     showStatus("Deploying confirmation beacon...", "loading");
 
@@ -120,12 +143,14 @@ function initRSVP() {
       const response = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
         showStatus("Mission confirmed. Directions inbound.", "success");
         form.reset();
+        currentStep = 0;
+        showStep(currentStep);
         showOverlay();
       } else {
         showStatus("Transmission failed. Try again later.", "error");
@@ -145,23 +170,17 @@ function initRSVP() {
       statusEl.className = "rsvp-status";
       form.appendChild(statusEl);
     }
-
     statusEl.textContent = message;
     statusEl.style.color =
-      type === "success"
-        ? "#00ffcc"
-        : type === "error"
-          ? "#ff4444"
-          : "#ffffff";
+      type === "success" ? "#00ffcc" :
+      type === "error"   ? "#ff4444" :
+                           "#ffffff";
     statusEl.style.fontWeight = "bold";
     statusEl.style.marginTop = "1rem";
   }
 
   function showOverlay() {
-    const overlay = document.getElementById("confirmation-overlay");
     if (!overlay) return;
-
     overlay.classList.remove("hidden");
-    // Close button logic is already handled in initRSVP, removed from here.
   }
 }
