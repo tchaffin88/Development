@@ -54,7 +54,6 @@ body.dark-mode {
 
 #bg-video.visible {
   opacity: 0.25;
-  /* Your original value */
 }
 
 #start-experience {
@@ -629,13 +628,16 @@ button {
 
 /* Multi-step RSVP form */
 .form-step {
-  display: none;              /* hide all steps by default */
-  flex-direction: column;     /* keep inputs stacked */
+  display: none;
+  /* hide all steps by default */
+  flex-direction: column;
+  /* keep inputs stacked */
   gap: 1rem;
 }
 
 .form-step.active {
-  display: flex;              /* show only the active step */
+  display: flex;
+  /* show only the active step */
 }
 
 /* Navigation buttons */
