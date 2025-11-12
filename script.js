@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    console.log("Form intercepted");
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
