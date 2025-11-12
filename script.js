@@ -12,8 +12,8 @@ document.getElementById('start-experience').addEventListener('click', () => {
 // Countdown logic
 function updateCountdown() {
   const countdownElement = document.getElementById("countdown-timer");
-  if (!countdownElement) return; // ← This prevents the error if the element doesn't exist
-  const targetTime = new Date("2025-11-22T18:00:00-05:00").getTime(); // EST
+  if (!countdownElement) return;
+  const targetTime = new Date("2025-11-22T18:00:00-05:00").getTime();
   const now = new Date().getTime();
   const distance = targetTime - now;
 
@@ -67,7 +67,11 @@ document.querySelectorAll('nav a').forEach(link => {
             container.classList.remove('fade-out');
             setTimeout(() => {
               revealSections();
-              if (page.includes("rsvp")) initRSVP(); // ← RSVP logic runs only after rsvp.html loads
+              if (page.includes("rsvp")) {
+                const overlay = document.getElementById("confirmation-overlay");
+                if (overlay) overlay.classList.add("hidden"); // Force-hide overlay after injection
+                initRSVP();
+              }
             }, 50);
           });
       }, 300);
@@ -77,8 +81,6 @@ document.querySelectorAll('nav a').forEach(link => {
 
 // Modular RSVP logic
 function initRSVP() {
-  const overlay = document.getElementById("confirmation-overlay");
-  if (overlay) overlay.classList.add("hidden"); // ← force-hide on load
   const form = document.querySelector("#rsvp-form");
   if (!form) return;
 
@@ -111,7 +113,7 @@ function initRSVP() {
       if (response.ok) {
         showStatus("Mission confirmed. Directions inbound.", "success");
         form.reset();
-        showOverlay(); // ← cinematic overlay trigger
+        showOverlay();
       } else {
         showStatus("Transmission failed. Try again later.", "error");
       }
