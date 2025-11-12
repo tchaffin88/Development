@@ -145,14 +145,16 @@ function initRSVP() {
     if (!overlay) return;
     overlay.classList.remove("hidden");
 
-     // Attach listener AFTER overlay is visible
-    setTimeout(() => {
+    // Use a MutationObserver to wait for the button to exist
+    const observer = new MutationObserver(() => {
       const closeBtn = document.getElementById("close-overlay");
       if (closeBtn) {
-        closeBtn.addEventListener("click", () => {
+        closeBtn.onclick = () => {
           overlay.classList.add("hidden");
-        });
+        };
+        observer.disconnect(); // Stop observing once attached
       }
-    }, 50);
+    });
+    observer.observe(overlay, { childList: true, subtree: true });
   }
 }
