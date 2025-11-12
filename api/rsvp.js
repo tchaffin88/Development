@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
 
         await resend.emails.send({
             from: 'RSVP Bot <noreply@haloparty.social>',
-            to: [process.env.HOST_EMAIL],
+            to: [email, process.env.HOST_EMAIL],
             subject: 'New RSVP Received',
             html: `
         <h2>New RSVP Submission</h2>
