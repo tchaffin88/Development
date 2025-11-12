@@ -5,9 +5,17 @@
     </p>
     <p>If you're bringing gear or drinks, let me know. Directions will be sent after confirmation.</p>
 
-    <form id="rsvp-form" method="POST" action="/api/rsvp.js">
+    <form id="rsvp-form">
         <input type="text" name="name" placeholder="Name" required />
         <input type="email" name="email" placeholder="Your Email" required />
         <button type="submit">Join the Battle</button>
     </form>
+
+    <div id="confirmation-overlay" class="hidden">
+  <div class="overlay-content">
+    <p>RSVP Confirmed!</p>
+    <button id="close-overlay">Close</button>
+  </div>
+</div>
+
 </section>
