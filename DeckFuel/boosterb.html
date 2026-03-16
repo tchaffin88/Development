@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booster Bundles | Decked Out</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <img src="assets/cover2.png" alt="Decked Out Logo" class="logo-full" />
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#products" class="active">Products</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <h1>Booster Bundles</h1>
+        <p>More packs, better value — perfect for collectors.</p>
+    </section>
+
+    <!-- PRODUCT GRID -->
+    <section id="products" class="section">
+        <h2 class="section-title">Available Booster Bundles</h2>
+
+        <div class="product-grid">
+
+            <!-- PRODUCT CARD 1 — SURGING SPARKS -->
+            <div class="product-card">
+                 <div id="product-component-1772954543388"></div>
+            </div>
+
+            <!-- PRODUCT CARD 2 — ASCENDED HEROES -->
+            <div class="product-card">
+                 <div id="product-component-1772954418254"></div>
+            </div>
+
+            <!-- PRODUCT CARD 3 — PHANTASMAL FLAMES -->
+            <div class="product-card">
+                 <div id="product-component-1772954515631"></div>
+            </div>
+
+            <!-- PRODUCT CARD 4 — MEGA EVOLUTION -->
+            <div class="product-card">
+                 <div id="product-component-1772954445793"></div>
+            </div>
+
+            <!-- PRODUCT CARD 5 — POKÉMON DAY 2026 -->
+            <div class="product-card">
+                 <div id="product-component-1772949604186"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        © Decked Out — Pokémon TCG Store
+    </footer>
+
+    <!-- UNIFIED SHOPIFY BUY BUTTON SCRIPT -->
+    <script type="text/javascript">
+        (function () {
+            var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+            function loadScript() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = scriptURL;
+                document.body.appendChild(script);
+                script.onload = ShopifyBuyInit;
+            }
+
+            if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+                ShopifyBuyInit();
+            } else {
+                loadScript();
+            }
+
+            function ShopifyBuyInit() {
+                var client = ShopifyBuy.buildClient({
+                    domain: 'h1hssh-yj.myshopify.com',
+                    storefrontAccessToken: '07b7243e258a34f60c4b9b1a6ac82b26',
+                });
+
+                ShopifyBuy.UI.onReady(client).then(function (ui) {
+
+                    const products = [
+                        { id: '9197497680060', node: 'product-component-1772954543388' }, // Surging Sparks
+                        { id: '9197497745596', node: 'product-component-1772954418254' }, // Ascended Heroes
+                        { id: '9197497811132', node: 'product-component-1772954515631' }, // Phantasmal Flames
+                        { id: '9197497843900', node: 'product-component-1772954445793' }, // Mega Evolution
+                        { id: '9258929094844', node: 'product-component-1772949604186' }, // Pokémon Day 2026
+                    ];
+
+                    products.forEach(prod => {
+                        ui.createComponent('product', {
+                            id: prod.id,
+                            node: document.getElementById(prod.node),
+                            moneyFormat: '%24%7B%7Bamount%7D%7D',
+                            options: {
+                                "product": {
+                                    "styles": {
+                                        "button": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "font-size": "18px",
+                                            "padding-top": "17px",
+                                            "padding-bottom": "17px",
+                                            "background-color": "#5106ff",
+                                            "border-radius": "10px",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "buttonDestination": "modal",
+                                    "contents": { "options": false },
+                                    "text": { "button": "View product" },
+                                    "googleFonts": ["Open Sans"]
+                                },
+                                "modalProduct": {
+                                    "contents": {
+                                        "img": false,
+                                        "imgWithCarousel": true,
+                                        "button": false,
+                                        "buttonWithQuantity": true
+                                    },
+                                    "styles": {
+                                        "button": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "font-size": "18px",
+                                            "padding-top": "17px",
+                                            "padding-bottom": "17px",
+                                            "background-color": "#5106ff",
+                                            "border-radius": "10px",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "googleFonts": ["Open Sans"],
+                                    "text": { "button": "Add to cart" }
+                                },
+                                "cart": {
+                                    "styles": {
+                                        "button": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "font-size": "18px",
+                                            "padding-top": "17px",
+                                            "padding-bottom": "17px",
+                                            "background-color": "#5106ff",
+                                            "border-radius": "10px",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "text": { "total": "Subtotal", "button": "Checkout" },
+                                    "googleFonts": ["Open Sans"]
+                                },
+                                "toggle": {
+                                    "styles": {
+                                        "toggle": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "background-color": "#5106ff",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "googleFonts": ["Open Sans"]
+                                }
+                            }
+                        });
+                    });
+
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CATEGORY NAME | Decked Out</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <img src="assets/cover.png" alt="Decked Out Logo" class="logo-full" />
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#products" class="active">Products</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <h1>CATEGORY NAME</h1>
+        <p>CATEGORY DESCRIPTION GOES HERE.</p>
+    </section>
+
+    <!-- PRODUCT GRID -->
+    <section id="products" class="section">
+        <h2 class="section-title">Available Products</h2>
+
+        <div class="product-grid">
+
+            <!-- PRODUCT CARD TEMPLATE -->
+            <!-- Copy this block for each product -->
+            <!--
+            <div class="product-card">
+                <div id="product-component-UNIQUE_ID_HERE"></div>
+            </div>
+            -->
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        © Decked Out — Pokémon TCG Store
+    </footer>
+
+    <!-- UNIFIED SHOPIFY BUY BUTTON SCRIPT -->
+    <script type="text/javascript">
+        (function () {
+            var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+
+            function loadScript() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = scriptURL;
+                document.body.appendChild(script);
+                script.onload = ShopifyBuyInit;
+            }
+
+            if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+                ShopifyBuyInit();
+            } else {
+                loadScript();
+            }
+
+            function ShopifyBuyInit() {
+                var client = ShopifyBuy.buildClient({
+                    domain: 'h1hssh-yj.myshopify.com',
+                    storefrontAccessToken: '07b7243e258a34f60c4b9b1a6ac82b26',
+                });
+
+                ShopifyBuy.UI.onReady(client).then(function (ui) {
+
+                    const products = [
+                        // Add products like this:
+                        // { id: 'SHOPIFY_PRODUCT_ID', node: 'product-component-UNIQUE_ID_HERE' },
+                    ];
+
+                    products.forEach(prod => {
+                        ui.createComponent('product', {
+                            id: prod.id,
+                            node: document.getElementById(prod.node),
+                            moneyFormat: '%24%7B%7Bamount%7D%7D',
+                            options: {
+                                "product": {
+                                    "styles": {
+                                        "button": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "font-size": "18px",
+                                            "padding-top": "17px",
+                                            "padding-bottom": "17px",
+                                            "background-color": "#5106ff",
+                                            "border-radius": "10px",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "buttonDestination": "modal",
+                                    "contents": { "options": false },
+                                    "text": { "button": "View product" },
+                                    "googleFonts": ["Open Sans"]
+                                },
+                                "modalProduct": {
+                                    "contents": {
+                                        "img": false,
+                                        "imgWithCarousel": true,
+                                        "button": false,
+                                        "buttonWithQuantity": true
+                                    },
+                                    "styles": {
+                                        "button": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "font-size": "18px",
+                                            "padding-top": "17px",
+                                            "padding-bottom": "17px",
+                                            "background-color": "#5106ff",
+                                            "border-radius": "10px",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "googleFonts": ["Open Sans"],
+                                    "text": { "button": "Add to cart" }
+                                },
+                                "cart": {
+                                    "styles": {
+                                        "button": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "font-size": "18px",
+                                            "padding-top": "17px",
+                                            "padding-bottom": "17px",
+                                            "background-color": "#5106ff",
+                                            "border-radius": "10px",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "text": { "total": "Subtotal", "button": "Checkout" },
+                                    "googleFonts": ["Open Sans"]
+                                },
+                                "toggle": {
+                                    "styles": {
+                                        "toggle": {
+                                            "font-family": "Open Sans, sans-serif",
+                                            "background-color": "#5106ff",
+                                            ":hover": { "background-color": "#8a0aff" },
+                                            ":focus": { "background-color": "#8a0aff" }
+                                        }
+                                    },
+                                    "googleFonts": ["Open Sans"]
+                                }
+                            }
+                        });
+                    });
+
+                });
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

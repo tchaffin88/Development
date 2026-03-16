@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Decked Out – Pokémon TCG Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <img src="assets/cover3.png" alt="Deck Fuel Logo" class="logo-full">
+    </header>
+
+<div class="header-transition"></div>
+
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-underline"></div>
+    </nav>
+
+    <!-- Slider -->
+    <section class="slider-container">
+
+        <div class="slider">
+            <div class="slide active"><img src="assets/surgingsparks2.webp" alt=""></div>
+            <div class="slide"><img src="assets/megaevolution2.webp" alt=""></div>
+            <div class="slide"><img src="assets/phantasmalflames2.jpg" alt=""></div>
+            <div class="slide"><img src="assets/ascendedheroes2.webp" alt=""></div>
+        </div>
+
+        <!-- Navigation buttons -->
+        <button class="slider-btn prev">&#10094;</button>
+        <button class="slider-btn next">&#10095;</button>
+
+        <!-- Pause/Play -->
+        <button class="slider-pause" id="pauseBtn">❚❚</button>
+
+    </section>
+
+
+    <!-- Products -->
+    <section id="products" class="section">
+        <h2 class="section-title">Pokémon TCG Products</h2>
+
+        <div class="product-grid">
+
+            <div class="product-card">
+                <a href="etbs.html" class="product-link">
+                    <img src="assets/etb.jpg" class="product-img">
+                    <h3>Elite Trainer Boxes</h3>
+                    <p>Latest sets, premium contents, and collector‑ready packaging.</p>
+                </a>
+            </div>
+
+            <div class="product-card">
+                <a href="boosters.html" class="product-link">
+                    <img src="assets/booster.jpg" alt="Booster Packs" class="product-img">
+                    <h3>Booster Packs</h3>
+                    <p>Crack open packs and chase your favorite hits.</p>
+                </a>
+            </div>
+
+            <div class="product-card">
+                <a href="boosterb.html" class="product-link">
+                    <img src="assets/bundle.jpg" alt="Booster Bundles" class="product-img">
+                    <h3>Booster Bundles</h3>
+                    <p>More packs, better value — perfect for collectors.</p>
+                </a>
+            </div>
+
+            <div class="product-card">
+                <a href="decks.html" class="product-link">
+                    <img src="assets/deck.jpg" alt="Decks" class="product-img">
+                    <h3>Decks</h3>
+                    <p>Ready‑to‑play decks for beginners and competitive players.</p>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+    <h2 class="section-title">Contact</h2>
+
+    <div class="contact-card">
+        <p><strong>Email:</strong> info@deckfuel.co</p>
+        <p><strong>Location:</strong> New Cumberland, WV</p>
+        <p><strong>Business Hours:</strong> Mon – Sat, 9 AM – 8 PM</p>
+        <p><strong>Response Time:</strong> Within 24 hours</p>
+    </div>
+</section>
+
+    <footer class="footer">
+        © Decked Out — Pokémon TCG Store
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
