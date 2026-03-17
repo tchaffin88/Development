@@ -35,7 +35,7 @@ body {
     margin: 0 auto;
     display: block;
     padding-top: 10px;
-    padding-bottom: 10px; 
+    padding-bottom: 10px;
 }
 
 .header-transition {
@@ -108,9 +108,10 @@ body {
 
 .slider-container {
     position: relative;
-    width: 100vw;        /* full browser width */
-    height: auto;
-    aspect-ratio: 1920 / 800;
+    width: 100%;
+    /* full browser width */
+    height: 600px;
+    overflow: hidden;
 }
 
 .slider {
@@ -135,7 +136,8 @@ body {
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;   /* fills the entire area */
+    object-fit: cover;
+    /* fills the entire area */
 }
 
 @keyframes fadeEffect {
@@ -306,74 +308,178 @@ body {
 /* FOOTER                        */
 /* ----------------------------- */
 
+/* FOOTER — CLEAN + MODERN */
 .footer {
+    background: #0a0f2e;
+    color: #d0d0d0;
     text-align: center;
-    padding: 1.5rem;
-    color: var(--neutral-mid);
-    margin-top: 2rem;
+    padding: 2rem 1rem;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer a {
+    color: #61cbf2;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+.footer a:hover {
+    text-decoration: underline;
 }
 
 /* ----------------------------- */
-/* ABOUT PAGE                    */
+/* ABOUT PAGE — REFINED THEME    */
 /* ----------------------------- */
 
 .page-hero {
     text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #5106ff, #61cbf2);
+    padding: 90px 20px;
+    background: linear-gradient(135deg, #0a0f2e, #001f4d 40%, #5106ff 100%);
     color: white;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    border-bottom: 4px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .page-hero h1 {
     font-size: 3rem;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
 .page-hero p {
-    font-size: 1.2rem;
-    opacity: 0.9;
+    font-size: 1.25rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
+/* ABOUT CONTENT GRID */
 .about-container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 20px 60px;
     display: grid;
-    gap: 30px;
+    gap: 45px; /* more breathing room between cards */
 }
 
+/* ABOUT CARDS — MATCH PRODUCT CARD STYLE */
 .about-card {
     background: #ffffff;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    padding: 36px;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradient border on hover */
+.about-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(135deg, #5106ff, #61cbf2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.about-card:hover::before {
+    opacity: 1;
+}
+
+.about-card * {
+    position: relative;
+    z-index: 2;
 }
 
 .about-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 28px rgba(81, 6, 255, 0.25);
 }
 
+/* HEADINGS */
 .about-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    font-size: 1.9rem;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.about-card h3 {
+    font-size: 1.3rem;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+/* PARAGRAPHS */
+.about-card p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+/* LISTS */
+.about-card ul {
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+
+.about-card ul li {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    line-height: 1.65;
     color: #333;
 }
 
-.about-card p,
-.about-card li {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #444;
+/* CONTACT CARD — MATCH ABOUT-CARD HOVER EFFECT */
+.contact-card {
+    position: relative;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 14px;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-.about-card ul {
-    padding-left: 20px;
+.contact-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    padding: 2px;
+    background: linear-gradient(135deg, #5106ff, #61cbf2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
 }
 
+.contact-card:hover::before {
+    opacity: 1;
+}
 
+.contact-card * {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(81, 6, 255, 0.25);
+}
 
 /* ----------------------------- */
 /* RESPONSIVE                    */
@@ -385,20 +491,39 @@ body {
     }
 }
 
+@media (max-width: 700px) {
+    .nav-list {
+        gap: 1.25rem;
+        font-size: 0.95rem;
+        flex-wrap: wrap;
+        padding: 0 0.75rem;
+    }
+
+    .nav-list a {
+        font-size: 0.95rem;
+    }
+}
+
 @media (max-width: 500px) {
     .product-grid {
         grid-template-columns: 1fr;
     }
 
-    @media (min-width: 1024px) {
-        .logo-full {
-            max-width: 800px;
-        }
+    .nav-list {
+        gap: 0.75rem;
+    }
+
+    .logo-full {
+        max-width: 320px;
     }
 }
 
 @media (min-width: 1024px) {
-  .slider-container {
-    height: 600px;
-  }
+    .logo-full {
+        max-width: 800px;
+    }
+
+    .slider-container {
+        height: 600px;
+    }
 }
