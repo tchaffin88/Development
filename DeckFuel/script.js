@@ -15,43 +15,14 @@ document.querySelector(".nav").addEventListener("mouseleave", () => {
     underline.style.width = "0";
 });
 
-let slideIndex = 0;
-let slides = document.querySelectorAll(".slide");
-let autoPlay = true;
-let slideInterval = setInterval(nextSlide, 5000); // 5 seconds
+/* HERO SLIDESHOW */
+let heroIndex = 0;
+const heroSlides = document.querySelectorAll(".hero-slide");
 
-function showSlide(n) {
-    slides.forEach(slide => slide.classList.remove("active"));
-    slides[n].classList.add("active");
+function cycleHero() {
+    heroSlides[heroIndex].classList.remove("active");
+    heroIndex = (heroIndex + 1) % heroSlides.length;
+    heroSlides[heroIndex].classList.add("active");
 }
 
-function nextSlide() {
-    if (!autoPlay) return;
-    slideIndex = (slideIndex + 1) % slides.length;
-    showSlide(slideIndex);
-}
-
-function prevSlide() {
-    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-    showSlide(slideIndex);
-}
-
-/* Buttons */
-document.querySelector(".next").addEventListener("click", () => {
-    autoPlay = false;
-    slideIndex = (slideIndex + 1) % slides.length;
-    showSlide(slideIndex);
-});
-
-document.querySelector(".prev").addEventListener("click", () => {
-    autoPlay = false;
-    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-    showSlide(slideIndex);
-});
-
-/* Pause/Play Button */
-const pauseBtn = document.getElementById("pauseBtn");
-pauseBtn.addEventListener("click", () => {
-    autoPlay = !autoPlay;
-    pauseBtn.textContent = autoPlay ? "❚❚" : "▶";
-});
+setInterval(cycleHero, 5000); // 5 seconds per slide

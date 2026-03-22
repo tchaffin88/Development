@@ -10,6 +10,11 @@
 
 <body>
 
+    <div id="deckfuel-intro">
+        <canvas id="foil-canvas"></canvas>
+        <img src="assets/cover3.png" alt="DeckFuel Logo" class="intro-logo">
+    </div>
+
     <!-- Header -->
     <header class="header">
         <img src="assets/cover3.png" alt="Deck Fuel Logo" class="logo-full">
@@ -29,25 +34,24 @@
         </ul>
     </nav>
 
-    <!-- Slider -->
-    <section class="slider-container">
-
-        <div class="slider">
-            <div class="slide active"><img src="assets/surgingsparks2.webp" alt=""></div>
-            <div class="slide"><img src="assets/megaevolution2.webp" alt=""></div>
-            <div class="slide"><img src="assets/phantasmalflames3.png" alt=""></div>
-            <div class="slide"><img src="assets/ascendedheroes2.webp" alt=""></div>
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-slides">
+                <img src="assets/surgingsparks2.webp" class="hero-slide active">
+                <img src="assets/megaevolution2.webp" class="hero-slide">
+                <img src="assets/phantasmalflames3.png" class="hero-slide">
+                <img src="assets/ascendedheroes2.webp" class="hero-slide">
+            </div>
         </div>
 
-        <!-- Navigation buttons -->
-        <button class="slider-btn prev">&#10094;</button>
-        <button class="slider-btn next">&#10095;</button>
+        <div class="hero-overlay"></div>
 
-        <!-- Pause/Play -->
-        <button class="slider-pause" id="pauseBtn">❚❚</button>
-
+        <div class="hero-content">
+            <h1>DeckFuel</h1>
+            <p>Premium Pokémon TCG Products & Collectibles</p>
+            <a href="#products" class="hero-btn">Shop Now</a>
+        </div>
     </section>
-
 
     <!-- Products -->
     <section id="products" class="section">
@@ -109,6 +113,207 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <script>
+        // If intro already played, remove it immediately
+        if (sessionStorage.getItem("deckfuelIntroPlayed")) {
+            const intro = document.getElementById("deckfuel-intro");
+            if (intro) intro.remove();
+        } else {
+            const intro = document.getElementById("deckfuel-intro");
+            const logo = document.querySelector(".intro-logo");
+            const canvas = document.getElementById("foil-canvas");
+
+            // --- THREE.JS SETUP ---
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            renderer.setSize(window.innerWidth, window.innerHeight, false);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            scene.add(camera);
+
+            const geometry = new THREE.PlaneGeometry(2, 2);
+
+            const uniforms = {
+                u_time: { value: 0 },
+                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                u_lightPos: { value: new THREE.Vector2(-1.5, 0.3) }, // will animate with GSAP
+            };
+
+            const vertexShader = `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = vec4(position, 1.0);
+                }
+            `;
+
+            // Gold foil shader: noise + anisotropic highlights + light sweep
+            const fragmentShader = `
+            precision highp float;
+            varying vec2 vUv;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_lightPos;
+
+            // Simple hash-based noise
+            float hash(vec2 p) {
+                p = fract(p * vec2(123.34, 345.45));
+                p += dot(p, p + 34.345);
+                return fract(p.x * p.y);
+            }
+
+            float noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                float a = hash(i);
+                float b = hash(i + vec2(1.0, 0.0));
+                float c = hash(i + vec2(0.0, 1.0));
+                float d = hash(i + vec2(1.0, 1.0));
+                vec2 u = f * f * (3.0 - 2.0 * f);
+                return mix(a, b, u.x) +
+                    (c - a) * u.y * (1.0 - u.x) +
+                    (d - b) * u.x * u.y;
+            }
+
+            void main() {
+                vec2 uv = vUv;
+
+                // Centered UV
+                vec2 p = uv - 0.5;
+
+                // Base gold color
+                vec3 gold = vec3(0.18, 0.34, 0.78);
+
+                // Foil noise layers
+                float n1 = noise(uv * 8.0 + u_time * 0.08);
+                float n2 = noise(uv * 20.0 - u_time * 0.12);
+                float n = n1 * 0.6 + n2 * 0.4;
+
+                // Anisotropic streaks (like brushed metal)
+                float streaks = noise(vec2(uv.x * 140.0, uv.y * 2.0 + u_time * 0.05));
+                streaks = pow(streaks, 1.6);
+
+                // Light sweep
+                vec2 lp = u_lightPos;
+                vec2 lpUv = lp * 0.5 + 0.5;
+                float dist = distance(uv, lpUv);
+                float light = smoothstep(0.38, 0.0, dist) * 0.18;
+
+                // Combine
+                float foil = n * 0.22 + streaks * 0.18 + light * 0.32;
+                foil = clamp(foil, 0.0, 1.5);
+
+                // Slight color variation
+                float hueShift = noise(uv * 6.0 + u_time * 0.2) * 0.15;
+                vec3 color = gold + vec3(hueShift * 0.4, hueShift * 0.2, -hueShift * 0.1);
+
+                // Apply foil intensity
+                color *= (0.18 + foil * 0.22);
+
+                // Vignette
+                float vignette = smoothstep(0.9, 0.4, length(p));
+                color *= vignette;
+
+                // Subtle contrast
+                color = pow(color, vec3(1.0 / 1.1));
+
+                gl_FragColor = vec4(color, 1.0);
+            }
+            `;
+
+            const material = new THREE.ShaderMaterial({
+                uniforms,
+                vertexShader,
+                fragmentShader
+            });
+
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            function resize() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                renderer.setSize(w, h, false);
+                uniforms.u_resolution.value.set(w, h);
+            }
+
+            window.addEventListener("resize", resize);
+            resize();
+
+            let startTime = performance.now();
+
+            function render() {
+                const now = performance.now();
+                uniforms.u_time.value = (now - startTime) * 0.001;
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+            render();
+
+            // --- GSAP TIMELINE ---
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    sessionStorage.setItem("deckfuelIntroPlayed", "true");
+                    gsap.to(intro, {
+                        opacity: 0,
+                        duration: 1.0,
+                        ease: "power2.inOut",
+                        onComplete: () => intro.remove()
+                    });
+                }
+            });
+
+            // Logo reveal
+            tl.to(logo, {
+                opacity: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+
+            // Light sweep across foil (left -> right)
+            tl.to(uniforms.u_lightPos.value, {
+                x: 1.5,
+                duration: 1.4,
+                ease: "power2.inOut"
+            }, "-=0.6");
+
+            // Small vertical drift of light
+            tl.to(uniforms.u_lightPos.value, {
+                y: -0.4,
+                duration: 1.4,
+                ease: "sine.inOut"
+            }, "<");
+
+            // Hold for a beat
+            tl.to({}, { duration: 0.6 });
+
+            // Fade out logo
+            tl.to(logo, {
+                opacity: 0,
+                duration: 0.9,
+                ease: "power2.in"
+            });
+        }
+    </script>
+    <script>
+        /* HERO PARALLAX — works with slideshow */
+        document.addEventListener("mousemove", (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 10;
+            const y = (e.clientY / window.innerHeight - 0.5) * 10;
+
+            const activeSlide = document.querySelector(".hero-slide.active");
+            if (activeSlide) {
+                activeSlide.style.transform = `scale(1.18) translate(${x}px, ${y}px)`;
+            }
+        });
+    </script>
 </body>
 
 </html>
